@@ -63,9 +63,9 @@ local function add_new(type)
     vim.api.nvim_buf_set_lines(buffer, 0, 6, false, {
         "namespace " .. namespace,
         "{",
-        "   public " .. type .. " " .. class_name,
-        "   {",
-        "   }",
+        "    public " .. type .. " " .. class_name,
+        "    {",
+        "    }",
         "}"
     })
 
