@@ -82,6 +82,31 @@ local function add_new(type)
     vim.api.nvim_win_set_buf(0, buffer)
 end
 
+function M.edit_project_file()
+    local current_file_name = vim.api.nvim_buf_get_name(0)
+    if current_file_name == "" then
+        print("no current file")
+        return
+    end
+    local current_dir = vim.fs.dirname(current_file_name)
+
+    local csproj_files = vim.fs.find(function(name, _)
+        return name:match('.*%.csproj$')
+    end, {
+        type = 'file',
+        upward = true,
+        stop = vim.loop.os_homedir(),
+        path = current_dir
+    })
+
+    if #csproj_files ~= 1 then
+        print(#csproj_files, "csproj files found")
+        return
+    end
+
+    vim.api.nvim_command("e " .. csproj_files[1])
+end
+
 function M.add_class()
     add_new("class")
 end
